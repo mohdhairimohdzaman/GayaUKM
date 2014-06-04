@@ -24,6 +24,13 @@
   \languagepath{Bahasa}
   \AtBeginDocument{
     \selectlanguage{bahasam}
+    %% Current Bahasa hyphenation is problematic and
+    %% prone to errors, therefore we disable it in Bahasa
+    %% mode. (Contributed by Fairuz Abdul fairuz.abd@gmail.com)
+    \tolerance=1
+    \emergencystretch=\maxdimen
+    \hyphenpenalty=10000
+    \hbadness=10000
   }
 \fi
 \if@english
