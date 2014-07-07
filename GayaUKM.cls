@@ -348,11 +348,13 @@
 %%%%%%%%%%%%
 \setsecnumdepth{paragraph}
 \settocdepth{subsection}
-\setsecheadstyle{\SingleSpacing\normalsize\bfseries\MakeUppercase}
+% 7 July 14 - make section headings raggedright, sloppy
+\setsecheadstyle{\SingleSpacing\raggedright\sloppy\normalsize\bfseries\MakeUppercase}
 \setbeforesecskip{-2\onelineskip}
 \setaftersecskip{1.5\onelineskip}
 
-\setsubsecheadstyle{\SingleSpacing\normalsize\bfseries}
+% 7 July 14 - make section headings raggedright
+\setsubsecheadstyle{\SingleSpacing\raggedright\sloppy\normalsize\bfseries}
 \setbeforesubsecskip{-2\onelineskip}
 \setaftersubsecskip{1.5\onelineskip}
 
