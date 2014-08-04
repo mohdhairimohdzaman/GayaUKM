@@ -14,6 +14,12 @@
 \DeclareOption{english}{\@englishtrue\@bahasamfalse}
 \DeclareOption{bahasam}{\@englishfalse\@bahasamtrue}
 
+%%%%%%%%%%%%%
+% Hyphenation. 
+%%%%%%%%%%%%%
+\newif\if@disableHyphenate
+\DeclareOption{nohyphen}{\@disableHyphenatetrue}
+
 \ExecuteOptions{bahasam}
 \ProcessOptions
 \RequirePackage{translator}
@@ -24,13 +30,6 @@
   \languagepath{Bahasa}
   \AtBeginDocument{
     \selectlanguage{bahasam}
-    %% Current Bahasa hyphenation is problematic and
-    %% prone to errors, therefore we disable it in Bahasa
-    %% mode. (Contributed by Fairuz Abdul fairuz.abd@gmail.com)
-    \tolerance=1
-    \emergencystretch=\maxdimen
-    \hyphenpenalty=10000
-    \hbadness=10000
   }
 \fi
 \if@english
@@ -39,6 +38,17 @@
   \AtBeginDocument{
     \selectlanguage{english}
   }
+\fi
+
+%% Current Bahasa hyphenation is problematic and
+%% prone to errors, therefore we disable it in Bahasa
+%% mode. (Contributed by Fairuz Abdul fairuz.abd@gmail.com)
+%% UPDATE 4 AUGUST: Give user the choice
+\if@disableHyphenate
+  \tolerance=1
+  \emergencystretch=\maxdimen
+  \hyphenpenalty=10000
+  \hbadness=10000
 \fi
 
 %%%%%%%%%
