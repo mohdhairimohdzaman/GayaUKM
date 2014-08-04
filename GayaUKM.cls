@@ -105,7 +105,9 @@
 \RequirePackage{ifxetex}
 \ifxetex
 \RequirePackage{fontspec}
+\RequirePackage{unicode-math}
 \setmainfont{Times New Roman}
+\setmathfont{Cambria Math}
 \setsansfont{Arial}
 \else
 \RequirePackage[utf8]{inputenc}
