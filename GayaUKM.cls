@@ -110,8 +110,8 @@
 \else
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
-%\RequirePackage{mathptmx}
 \RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
 \RequirePackage{helvet}
 \fi
 
