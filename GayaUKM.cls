@@ -1,5 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2014/01/11 LaTeX2e class for UKM Thesis v1.01.  Copyright (c) 2013,2014 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2014/08/04 LaTeX2e class for UKM Thesis v1.02.  Copyright (c) 2013,2014 Lim Lian Tze (liantze@gmail.com)]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHANGES:
+%
+% v1.02 (August 4, 2014)
+%  - Using newtxtext and newtxmath for better fonts.
+%  - Added nohyphen option for disabling hyphenation.
 
 \LoadClass[12pt,a4paper,oneside]{memoir}
 \RequirePackage{etoolbox}
