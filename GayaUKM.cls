@@ -1,8 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2014/08/04 LaTeX2e class for UKM Thesis v1.02.  Copyright (c) 2013,2014 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2016/06/02 LaTeX2e class for UKM Thesis v1.03.  Copyright (c) 2013-2016 Lim Lian Tze (liantze@gmail.com)]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHANGES:
+%
+% v1.03 (June 2, 2016)
+%  - Using babel's new "main" option to set the main language.
 %
 % v1.02 (August 4, 2014)
 %  - Using newtxtext and newtxmath for better fonts.
@@ -33,18 +36,18 @@
 \uselanguage{English,Bahasa}
 
 \if@bahasam
-  \RequirePackage[english,bahasam]{babel}
+  \RequirePackage[english,main=bahasam]{babel}
   \languagepath{Bahasa}
-  \AtBeginDocument{
-    \selectlanguage{bahasam}
-  }
+%  \AtBeginDocument{
+%    \selectlanguage{bahasam}
+%  }
 \fi
 \if@english
-  \RequirePackage[bahasam,english]{babel}
+  \RequirePackage[bahasam,main=english]{babel}
   \languagepath{English}
-  \AtBeginDocument{
-    \selectlanguage{english}
-  }
+%  \AtBeginDocument{
+%    \selectlanguage{english}
+%  }
 \fi
 
 %% Current Bahasa hyphenation is problematic and
