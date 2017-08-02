@@ -1,11 +1,17 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2016/06/02 LaTeX2e class for UKM Thesis v1.03.  Copyright (c) 2013-2016 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2017/08/02 LaTeX2e class for UKM Thesis v1.1.  Copyright (c) 2013-2017 Lim Lian Tze (liantze@gmail.com)]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHANGES:
 %
+% v1.1 (August 2, 2017)
+%  - Wider caption separator
+%  - \source must now be within a \caption but won't be
+%    shown in the LoF nor LoT.
+%
 % v1.03 (June 2, 2016)
-%  - Using babel's new "main" option to set the main language.
+%  - Using babel's new "main" option to set the main
+%    language.
 %
 % v1.02 (August 4, 2014)
 %  - Using newtxtext and newtxmath for better fonts.
@@ -25,7 +31,7 @@
 \DeclareOption{bahasam}{\@englishfalse\@bahasamtrue}
 
 %%%%%%%%%%%%%
-% Hyphenation. 
+% Hyphenation.
 %%%%%%%%%%%%%
 \newif\if@disableHyphenate
 \DeclareOption{nohyphen}{\@disableHyphenatetrue}
@@ -38,16 +44,16 @@
 \if@bahasam
   \RequirePackage[english,main=bahasam]{babel}
   \languagepath{Bahasa}
-%  \AtBeginDocument{
-%    \selectlanguage{bahasam}
-%  }
+%   \AtBeginDocument{
+%     \selectlanguage{bahasam}
+%   }
 \fi
 \if@english
   \RequirePackage[bahasam,main=english]{babel}
   \languagepath{English}
-%  \AtBeginDocument{
-%    \selectlanguage{english}
-%  }
+%   \AtBeginDocument{
+%     \selectlanguage{english}
+%   }
 \fi
 
 %% Current Bahasa hyphenation is problematic and
@@ -167,7 +173,7 @@
     \orichapter[#2]{#2}%
   }{%
     \orichapter[#1]{#2}%
-  }    
+  }
 }
 
 \newcommand\mystarchap[1]{\orichapter*{#1}}
@@ -183,7 +189,8 @@
 %%%%%%%%%%%%
 % Captions
 %%%%%%%%%%%%
-\captiondelim{\enspace}
+% \captiondelim{\enspace}
+\captiondelim{\hspace{2em}}
 \hangcaption
 \newsubfloat{figure}
 \setcounter{lofdepth}{2}
@@ -263,7 +270,7 @@
 %%%%%%%
 \patchcommand{\frontmatter}{
   \setlength{\beforechapskip}{-\baselineskip}
-  \setlength{\midchapskip}{0mm}	
+  \setlength{\midchapskip}{0mm}
   \makeoddhead{plain}{}{}{\thepage}
 }{
   \phantomsection
@@ -280,9 +287,9 @@
 %%%%%%%
 \patchcommand{\mainmatter}{
   \setstretch{1.5}
-  %% Chapter title: bottom of FIRST LINE is 
-  %% 50mm from page margin = 20mm from top margin; 
-  %% this is actually \beforechapskip + \topskip 
+  %% Chapter title: bottom of FIRST LINE is
+  %% 50mm from page margin = 20mm from top margin;
+  %% this is actually \beforechapskip + \topskip
   %% + \baselineskip (baseline here is for 2 lines!!)
   %% so \beforechapskip should be 20mm minus \topskip
   %% minus 1em
@@ -491,9 +498,12 @@
   }
 }{\clearpage}
 
-\newcommand{\source}[1]{
-  \translatelet\foo{Source}
-  \foo: {#1}\par
+\newcommand{\source}[1]{%
+  \protect\translatelet\foo{Source}%
+  {\\[1em]\foo: {#1}}
 }
+\robustify{\source}
+\addtocontents{lof}{\protect\renewcommand{\protect\source}[1]{}}
+\addtocontents{lot}{\protect\renewcommand{\protect\source}[1]{}}
 
 \renewcommand\UrlFont{\rmfamily}
