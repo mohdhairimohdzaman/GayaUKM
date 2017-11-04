@@ -1,8 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2017/08/02 LaTeX2e class for UKM Thesis v1.1.  Copyright (c) 2013-2017 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2017/11/04 LaTeX2e class for UKM Thesis v1.2.  Copyright (c) 2013-2017 Lim Lian Tze (liantze@gmail.com)]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHANGES:
+%
+% v1.2 (November 4, 2017)
+%  - Turns out that \source must be centered below the
+%    the figure/table _independently_ of the caption
+%    text body.
+%  - Float captions now occupy 80% of the text width only.
 %
 % v1.1 (August 2, 2017)
 %  - Wider caption separator
@@ -198,6 +204,8 @@
 \setcounter{lotdepth}{2}
 \hangsubcaption
 \subcaptionsize{\normalsize}
+\captionwidth{.8\textwidth}
+\changecaptionwidth
 
 
 %%%%%%%%%%%
@@ -500,7 +508,7 @@
 
 \newcommand{\source}[1]{%
   \protect\translatelet\foo{Source}%
-  {\\[1em]\foo: {#1}}
+  {\medskip\parbox{.8\textwidth}{\centering\foo: {#1}}}
 }
 \robustify{\source}
 \addtocontents{lof}{\protect\renewcommand{\protect\source}[1]{}}
