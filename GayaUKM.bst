@@ -1,13 +1,14 @@
 %%
 %% This is file `GayaUKM.bst',
-%% generated with the docstrip utility.
+%% generated with the docstrip utility by LianTze Lim.
+%% Updated 2019/05/04: citations will only abbreviate when >3 authors.
 %%
 %% The original source files were:
 %%
 %% merlin.mbs  (with options: `ay,nat,lang,nm-rvvc,dt-beg,yr-per,yrp-per,note-yr,volp-sp,num-xser,jnm-x,add-pub,doi,edparxc,pp,ed,abr,ednx,xedn,amper,and-xcom,etal-xc,url,url-blk,nfss,')
 %% ----------------------------------------
 %% *** Universiti Kebangsaan Malaysia thesis bibliography style (GayaUKM) ***
-%% 
+%%
 %% Copyright 1994-2011 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
@@ -1271,27 +1272,46 @@ FUNCTION {chop.word}
   if$
 }
 FUNCTION {format.lab.names}
-{ 's :=
-  "" 't :=
-  s #1 "{vv~}{ll}" format.name$
-  s num.names$ duplicate$
-  #2 >
-    { pop$
-      " " * bbl.etal *
-    }
-    { #2 <
-        'skip$
-        { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
+{'s :=
+ "" 't :=
+  #1 'nameptr :=
+  s num.names$ 'numnames :=
+  numnames 'namesleft :=
+    { namesleft #0 > }
+    { s nameptr
+      "{vv~}{ll}" format.name$
+      't :=
+      nameptr #1 >
+        {
+          nameptr #2 =
+          numnames #3 > and
+            { "others" 't :=
+              #1 'namesleft := }
+            'skip$
+          if$
+          namesleft #1 >
+            { ", " * t * }
             {
-              " " * bbl.etal *
+              s nameptr "{ll}" format.name$ duplicate$ "others" =
+                { 't := }
+                { pop$ }
+              if$
+              t "others" =
+                { " et~al." * }
+                {
+                  "\&"
+                  space.word * t *
+                }
+              if$
             }
-            { " \& " * s #2 "{vv~}{ll}" format.name$
-              * }
           if$
         }
+        't
       if$
+      nameptr #1 + 'nameptr :=
+      namesleft #1 - 'namesleft :=
     }
-  if$
+  while$
 }
 
 FUNCTION {author.key.label}

@@ -1,8 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2017/11/04 LaTeX2e class for UKM Thesis v1.2.  Copyright (c) 2013-2017 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2019/05/04 LaTeX2e class for UKM Thesis v1.3.  Copyright (c) 2013-2019 Lim Lian Tze (liantze@gmail.com)]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHANGES:
+% v1.3 (May 4, 2019)
+%  - Captions are now 10pt (\footnotesize).
+%  - Updated GayaUKM.bst and GayaUKM-ms.bst to only abbreviate
+%    citations when there are >3 authors.
+%  - Updated symbols.tex and senaraisimbol.tex to demonstrate
+%    manually changing column widths.
 %
 % v1.2 (November 4, 2017)
 %  - Turns out that \source must be centered below the
@@ -197,13 +203,15 @@
 %%%%%%%%%%%%
 % \captiondelim{\enspace}
 \captiondelim{\hspace{2em}}
+\captionnamefont{\footnotesize}
+\captiontitlefont{\footnotesize}
 \hangcaption
 \newsubfloat{figure}
 \setcounter{lofdepth}{2}
 \newsubfloat{table}
 \setcounter{lotdepth}{2}
 \hangsubcaption
-\subcaptionsize{\normalsize}
+\subcaptionsize{\footnotesize}
 \captionwidth{.8\textwidth}
 \changecaptionwidth
 
@@ -508,7 +516,7 @@
 
 \newcommand{\source}[1]{%
   \protect\translatelet\foo{Source}%
-  {\medskip\parbox{.8\textwidth}{\centering\foo: {#1}}}
+  {\medskip\parbox{.8\textwidth}{\centering\footnotesize\foo: {#1}}}
 }
 \robustify{\source}
 \addtocontents{lof}{\protect\renewcommand{\protect\source}[1]{}}
