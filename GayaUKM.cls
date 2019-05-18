@@ -1,8 +1,18 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{GayaUKM}[2019/05/04 LaTeX2e class for UKM Thesis v1.3.  Copyright (c) 2013-2019 Lim Lian Tze (liantze@gmail.com)]
+\ProvidesClass{GayaUKM}[2019/05/18 LaTeX2e class for UKM Thesis v1.4.  Copyright (c) 2013-2019 Lim Lian Tze (liantze@gmail.com)]
+%% GayaUKM (C) is a LaTeX class for authoring theses that fulfil formatting
+%% specifications required by Universiti Kebangsaan Malaysia (UKM), Malaysia.
+%% The template was developed together with UKM Pusat Pengajian Siswazah (PPS)
+%% and UKM staff Ir. Dr. Zambri Harun, Dr. Mohd Rasidi Rasani, Dr. M. Asyraf
+%% Zulkifley.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHANGES:
+% v1.4 (May 18, 2019)
+% - Splits \maketitle into \makecoverpage and \maketitlepage
+% - When in English mode, requires \titlems, \degreetypems and
+%   \facultyms to generate a Malay titlepage
+%
 % v1.3 (May 4, 2019)
 %  - Captions are now 10pt (\footnotesize).
 %  - Updated GayaUKM.bst and GayaUKM-ms.bst to only abbreviate
@@ -135,6 +145,11 @@
 \newcommand{\campus}[1]{\def\@campus{#1}}
 \newcommand{\submissiondate}[1]{\def\@submissiondate{#1}}
 \newcommand{\submissionyear}[1]{\def\@submissionyear{#1}}
+\if@english
+  \newcommand{\titlems}[1]{\def\@title@ms{#1}}
+  \newcommand{\degreetypems}[1]{\def\@degreetype@ms{#1}}
+  \newcommand{\facultyms}[1]{\def\@faculty@ms{#1}}
+\fi
 
 
 %%%%%%%%%
@@ -194,6 +209,7 @@
 %%%%%%%%%%%%
 % Hyperlinks and bookmarks
 %%%%%%%%%%%%
+\PassOptionsToPackage{hyphens}{url}
 \RequirePackage[breaklinks]{hyperref}
 \RequirePackage[depth=2,numbered]{bookmark}
 
@@ -435,9 +451,33 @@
 \setcitestyle{aysep={}}
 
 %%%%%%%%
-% Cover Page
+% Cover Page and title page
 %%%%%%%%
-\renewcommand{\maketitle}{%
+
+\renewcommand{\maketitle}{\makecoverpage\maketitlepage}
+
+\newcommand{\make@inside@titlepage}{%
+	\begin{titlingpage}
+		 \vspace*{15mm}
+		 \SingleSpacing
+		 \centering
+		 \MakeUppercase{\@title}\par
+		 \vfill
+		 \MakeUppercase{\@author}\par
+		 \vfill
+		 \translatelet\foo{thesissubmission}\MakeUppercase{\foo}\\
+		 \MakeUppercase{\@degreetype}\par
+		 \vfill
+		 \MakeUppercase{\@faculty}\\
+		 UNIVERSITI KEBANGSAAN MALAYSIA\\
+		 \MakeUppercase{\@campus}\\
+		 \vspace{2\onelineskip}
+		 \@submissionyear\par
+		 \vspace*{15mm}
+	\end{titlingpage}
+}
+
+\newcommand{\makecoverpage}{%
    \begin{titlingpage}
       \vspace*{15mm}
       \SingleSpacing
@@ -450,27 +490,18 @@
       UNIVERSITI KEBANGSAAN MALAYSIA\par
       \vspace*{35mm}
    \end{titlingpage}
-
-   \begin{titlingpage}
-      \vspace*{15mm}
-      \SingleSpacing
-      \centering
-      \MakeUppercase{\@title}\par
-      \vfill
-      \MakeUppercase{\@author}\par
-      \vfill
-      \translatelet\foo{thesissubmission}\MakeUppercase{\foo}\\
-      \MakeUppercase{\@degreetype}\par
-      \vfill
-      \MakeUppercase{\@faculty}\\
-      UNIVERSITI KEBANGSAAN MALAYSIA\\
-      \MakeUppercase{\@campus}\\
-      \vspace{2\onelineskip}
-      \@submissionyear\par
-      \vspace*{15mm}
-   \end{titlingpage}
 }
 
+\newcommand{\maketitlepage}{%
+	 \make@inside@titlepage
+   \if@english\begingroup
+     \def\@title{\@title@ms}
+     \def\@faculty{\@faculty@ms}
+     \def\@degreetype{\@degreetype@ms}
+     \languagepath{Bahasa}\foreignlanguage{bahasam}
+     \make@inside@titlepage
+   \endgroup\fi
+}
 
 %%%%%%%%%
 % Declaration

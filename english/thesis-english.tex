@@ -2,22 +2,39 @@
 \documentclass[english,nohyphen]{GayaUKM}
 
 \usepackage{graphicx}
+\usepackage{longtable} %% If your list of symbols, abbreviations is longer than a page and you want to use a longtable for it
 
-\title{<Your Thesis Title>}
-\author{<Your Name>}
-\authorid{<P00000 ID No.>}
+%% Your metadata. Note that an English thesis needs a Malay title page as well,
+%% so you'll need to specify the Malay title, faculty and degreetype.
+\title{<Your Thesis Title, Manually Break\protect\\the Lines into a Nice Reverse\protect\\Pyramid if Necessary>}
+\titlems{<Tajuk Tesis Anda, Pecahkan Tajuk Panjang\protect\\Secara Manual Jika Perlu>}
+\author{<Your Name>}  %% Assuming your name is spelt the same way in English and Malay
+\authorid{<P00000>}
 \faculty{<Your Faculty>}
+\facultyms{<Faculti Anda>}
 \submissiondate{2 October 2013}
 \submissionyear{2013}
 \degreetype{Doctor of Philosophy}
-\campus{Bangi}
+\degreetypems{Doktor Falsafah}
+\campus{Bangi} %% Assuming Malaysian cities are spelt the same way in English and Malay
 
 %% If you find the boxes around hyperlinks distracting
 \hypersetup{colorlinks,allcolors=black}
 
 \begin{document}
 
-\maketitle
+%% Generate the cover page
+\makecoverpage
+
+%% Generate the English and Malay title pages.
+%% Re-specify your title with different manual line breaks for the English
+%% title page, if necessary
+\title{<Your Thesis Title, Manually Break the Lines into a Nice Reverse Pyramid if Necessary>}
+\maketitlepage
+
+%%%% If you're happy to just use the same line-breaking scheme for the English
+%%%% title on both the cover and the titlepage, then you can just call
+%%%% \maketitle which combines both \makecoverpage and \maketitlepage.
 
 \frontmatter
 \declaration

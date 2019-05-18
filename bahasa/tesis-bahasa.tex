@@ -3,9 +3,9 @@
 
 \usepackage{graphicx}
 
-\title{<Tajuk Tesis Anda>}
+\title{<Tajuk Tesis Anda, Pecahkan Tajuk Panjang Secara Manual\protect\\Jika Perlu>}
 \author{<Nama Anda>}
-\authorid{<P00000 No.~ID>}
+\authorid{<P00000>}
 \faculty{<Fakulti Anda>}
 \submissiondate{2 Oktober 2013}
 \submissionyear{2013}
@@ -17,7 +17,13 @@
 
 \begin{document}
 
-\maketitle
+%% Cover page
+\makecoverpage
+
+%% Re-specify your title with different manual line breaks for the
+%% title page, if necessary
+\title{<Tajuk Tesis Anda, Pecahkan Tajuk Panjang\protect\\Secara Manual Jika Perlu>}
+\maketitlepage
 
 \frontmatter
 \declaration

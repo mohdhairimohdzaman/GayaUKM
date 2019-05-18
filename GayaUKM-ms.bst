@@ -2,6 +2,13 @@
 %% This is file `GayaUKM-ms.bst',
 %% generated with the docstrip utility by LianTze Lim and localised for
 %% Bahasa Malaysia.
+%% GayaUKM (C) is a LaTeX class for authoring theses that fulfil formatting
+%% specifications required by Universiti Kebangsaan Malaysia (UKM), Malaysia.
+%% The template was developed together with UKM Pusat Pengajian Siswazah (PPS)
+%% and UKM staff Ir. Dr. Zambri Harun, Dr. Mohd Rasidi Rasani, Dr. M. Asyraf
+%% Zulkifley.
+%% Updated 2019/05/19: supports urldate fields when url or doi fields
+%% are present.
 %% Updated 2019/05/04: citations will only abbreviate when >3 authors.
 %%
 %% The original source files were:
@@ -78,6 +85,7 @@ ENTRY
     title
     type
     url
+    urldate
     volume
     year
   }
@@ -362,7 +370,13 @@ FUNCTION {format.url}
   url
   duplicate$ empty$
     { pop$ "" }
-    { "\urlprefix\url{" swap$ * "}" * }
+    { "\urlprefix\url{" swap$ * "}" *
+      urldate
+      duplicate$ empty$
+        { pop$ "" }
+        { " [" swap$ * "]" * * }
+      if$
+    }
   if$
 }
 
@@ -488,6 +502,11 @@ FUNCTION {format.doi}
     {
       new.block
       "\doi{" doi * "}" *
+      urldate
+      duplicate$ empty$
+        { pop$ "" }
+        { " [" swap$ * "]" * * }
+      if$
     }
   if$
 }
@@ -1563,7 +1582,8 @@ FUNCTION {begin.bib}
   write$ newline$
   "\providecommand{\url}[1]{\texttt{#1}}"
   write$ newline$
-  "\providecommand{\urlprefix}{URL }"
+%  "\providecommand{\urlprefix}{URL }"
+  "\providecommand{\urlprefix}{}"
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
   write$ newline$

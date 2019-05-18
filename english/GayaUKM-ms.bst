@@ -1,13 +1,22 @@
 %%
-%% This is file `GayaUKM.bst',
-%% generated with the docstrip utility.
+%% This is file `GayaUKM-ms.bst',
+%% generated with the docstrip utility by LianTze Lim and localised for
+%% Bahasa Malaysia.
+%% GayaUKM (C) is a LaTeX class for authoring theses that fulfil formatting
+%% specifications required by Universiti Kebangsaan Malaysia (UKM), Malaysia.
+%% The template was developed together with UKM Pusat Pengajian Siswazah (PPS)
+%% and UKM staff Ir. Dr. Zambri Harun, Dr. Mohd Rasidi Rasani, Dr. M. Asyraf
+%% Zulkifley.
+%% Updated 2019/05/19: supports urldate fields when url or doi fields
+%% are present.
+%% Updated 2019/05/04: citations will only abbreviate when >3 authors.
 %%
 %% The original source files were:
 %%
 %% merlin.mbs  (with options: `ay,nat,lang,nm-rvvc,dt-beg,yr-per,yrp-per,note-yr,volp-sp,num-xser,jnm-x,add-pub,doi,edparxc,pp,ed,abr,ednx,xedn,amper,and-xcom,etal-xc,url,url-blk,nfss,')
 %% ----------------------------------------
 %% *** Universiti Kebangsaan Malaysia thesis bibliography style (GayaUKM) ***
-%% 
+%%
 %% Copyright 1994-2011 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
@@ -76,6 +85,7 @@ ENTRY
     title
     type
     url
+    urldate
     volume
     year
   }
@@ -360,7 +370,13 @@ FUNCTION {format.url}
   url
   duplicate$ empty$
     { pop$ "" }
-    { "\urlprefix\url{" swap$ * "}" * }
+    { "\urlprefix\url{" swap$ * "}" *
+      urldate
+      duplicate$ empty$
+        { pop$ "" }
+        { " [" swap$ * "]" * * }
+      if$
+    }
   if$
 }
 
@@ -486,6 +502,11 @@ FUNCTION {format.doi}
     {
       new.block
       "\doi{" doi * "}" *
+      urldate
+      duplicate$ empty$
+        { pop$ "" }
+        { " [" swap$ * "]" * * }
+      if$
     }
   if$
 }
@@ -1271,27 +1292,46 @@ FUNCTION {chop.word}
   if$
 }
 FUNCTION {format.lab.names}
-{ 's :=
-  "" 't :=
-  s #1 "{vv~}{ll}" format.name$
-  s num.names$ duplicate$
-  #2 >
-    { pop$
-      " " * bbl.etal *
-    }
-    { #2 <
-        'skip$
-        { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
+{'s :=
+ "" 't :=
+  #1 'nameptr :=
+  s num.names$ 'numnames :=
+  numnames 'namesleft :=
+    { namesleft #0 > }
+    { s nameptr
+      "{vv~}{ll}" format.name$
+      't :=
+      nameptr #1 >
+        {
+          nameptr #2 =
+          numnames #3 > and
+            { "others" 't :=
+              #1 'namesleft := }
+            'skip$
+          if$
+          namesleft #1 >
+            { ", " * t * }
             {
-              " " * bbl.etal *
+              s nameptr "{ll}" format.name$ duplicate$ "others" =
+                { 't := }
+                { pop$ }
+              if$
+              t "others" =
+                { " et~al." * }
+                {
+                  "\&"
+                  space.word * t *
+                }
+              if$
             }
-            { " \& " * s #2 "{vv~}{ll}" format.name$
-              * }
           if$
         }
+        't
       if$
+      nameptr #1 + 'nameptr :=
+      namesleft #1 - 'namesleft :=
     }
-  if$
+  while$
 }
 
 FUNCTION {author.key.label}
@@ -1542,7 +1582,8 @@ FUNCTION {begin.bib}
   write$ newline$
   "\providecommand{\url}[1]{\texttt{#1}}"
   write$ newline$
-  "\providecommand{\urlprefix}{URL }"
+%  "\providecommand{\urlprefix}{URL }"
+  "\providecommand{\urlprefix}{}"
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
   write$ newline$
