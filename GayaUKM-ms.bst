@@ -7,6 +7,7 @@
 %% The template was developed together with UKM Pusat Pengajian Siswazah (PPS)
 %% and UKM staff Ir. Dr. Zambri Harun, Dr. Mohd Rasidi Rasani, Dr. M. Asyraf
 %% Zulkifley.
+%% Updated 2019/11/20: now prints "edisi ke-3" rather than "3 edisi ke-" for editions.
 %% Updated 2019/05/19: supports urldate fields when url or doi fields
 %% are present.
 %% Updated 2019/05/04: citations will only abbreviate when >3 authors.
@@ -230,7 +231,7 @@ FUNCTION {bbl.edby}
 { "disunting oleh" }
 
 FUNCTION {bbl.edition}
-{ "edisi" }
+{ "edisi ke-" }
 
 FUNCTION {bbl.volume}
 { "jil." }
@@ -758,10 +759,12 @@ FUNCTION {format.edition}
         { "t" }
       if$ change.case$
       "edition" bibinfo.check
-      " " * bbl.edition *
+%      " " * bbl.edition *
+      bbl.edition swap$ *
     }
   if$
 }
+
 INTEGERS { multiresult }
 FUNCTION {multi.page.check}
 { 't :=
